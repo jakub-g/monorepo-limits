@@ -2,11 +2,15 @@
 
 This is just a collection of **hard limits** of various technologies, directly encountered in a day-to-day operations and maintenance of a large git monorepo over years.
 
+The limits here are not in any way specific to monorepo; it's just that having a large repo with tens of thousands of files is likely to, at some point, uncover those limits.
+
 _Technologies mentioned: git, Node.js, Amazon AWS S3, GitHub.com, GitLab self-hosted_
+
+_Note: having large files (> several MBs) stored in a git repo is **hugely not recommended**, especially if those files change more often than a few times per year._
 
 ## Hard limits
 
-### 10 MB: The limit for AWS CloudFront and Google GCP Cloud CDN for on-the-fly compression.
+### 10 MB: The limit for AWS CloudFront and Google GCP Cloud CDN for on-the-fly asset compression to work
 
 AWS CloudFront [can on-the-fly gzip the files up to 10MB](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/ServingCompressedFiles.html) - which will typically shrink their size to around ~2MB after gzip. Once you exceed 10MB, assets gets sent to customers as-is uncompressed. Which likely means a massive loading time regression.
 
