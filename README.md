@@ -29,11 +29,13 @@ You should monitor your bundle sizes, on every pull request _and_ in production,
 If you have [more than 20 MB of non-TS files (JS, JSON) in a TS project, tsserver will stop working](https://github.com/microsoft/TypeScript/blob/5026c6675cbbfd493011616639595084f899d513/src/server/editorServices.ts#L2758-L2780
 ).
 
-This is likely a config against misconfigurations like having `dist` visible by TS project.
+This was likely introduced as a way to prevent misconfigurations like having `dist` visible by TS project.
 
-But it can also happen e.g. when you try to merge a legacy JS codebase into a TS project (merging multiple repos, onboarding an acquisition etc.).
+But it can also happen e.g. when you try to merge a legacy JS codebase into a TS project (merging multiple repos together, onboarding an acquisition etc.).
 
 _Workaround_: In `tsconfig.json`, set `compilerOptions.disableSizeLimit: true`.
+
+_Solution_: Migrate your JS/JSON files to TS.
 
 ### 33.8 MB / 45 MB: Github GraphQL payload limit
 
