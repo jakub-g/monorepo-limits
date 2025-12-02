@@ -1,6 +1,6 @@
 # monorepo-limits
 
-This is just a collection of **hard limits** of various technologies, directly encountered in a day-to-day operations of a large git monorepo.
+This is just a collection of **hard limits** of various technologies, directly encountered in a day-to-day operations and maintenance of a large git monorepo over years.
 
 _Technologies mentioned: git, Node.js, Amazon AWS S3, GitHub.com, GitLab self-hosted_
 
