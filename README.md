@@ -1,8 +1,8 @@
 # monorepo-limits
 
-_Technologies mentioned: git, Node.js, Amazon AWS S3, GitHub.com, GitLab self-hosted_
+This is just a collection of **hard limits** of various technologies, directly encountered in a day-to-day operations of a large git monorepo.
 
-Hard limits.
+_Technologies mentioned: git, Node.js, Amazon AWS S3, GitHub.com, GitLab self-hosted_
 
 ### 33.8 MB / 45 MB: Github GraphQL payload limit
 
