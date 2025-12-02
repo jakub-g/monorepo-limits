@@ -4,6 +4,8 @@ This is just a collection of **hard limits** of various technologies, directly e
 
 _Technologies mentioned: git, Node.js, Amazon AWS S3, GitHub.com, GitLab self-hosted_
 
+## Hard limits
+
 ### 10 MB: The limit for AWS CloudFront and Google GCP Cloud CDN for on-the-fly compression.
 
 AWS CloudFront [can on-the-fly gzip the files up to 10MB](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/ServingCompressedFiles.html) - which will typically shrink their size to around ~2MB after gzip. Once you exceed 10MB, assets gets sent to customers as-is uncompressed. Which likely means a massive loading time regression.
@@ -17,6 +19,17 @@ In case of JS app, you want to split your code to lazy-loadable components dynam
 However, it's extremely easy to make a mistake in your JS code which explodes you bundle size via an innocuous static `import` which brings much more than it looks like.
 
 You should monitor your bundle sizes, on every pull request _and_ in production, and have monitors set up when exceeding thresholds close to 10 MB.
+
+### 20 MB: Total max size of JS/JSON files in a TS project until tsserver stops working
+
+If you have [more than 20 MB of non-TS files (JS, JSON) in a TS project, tsserver will stop working](https://github.com/microsoft/TypeScript/blob/5026c6675cbbfd493011616639595084f899d513/src/server/editorServices.ts#L2758-L2780
+).
+
+This is likely a config against misconfigurations like having `dist` visible by TS project.
+
+But it can also happen e.g. when you try to merge a legacy JS codebase into a TS project (merging multiple repos, onboarding an acquisition etc.).
+
+_Workaround_: In `tsconfig.json`, set `compilerOptions.disableSizeLimit: true`.
 
 ### 33.8 MB / 45 MB: Github GraphQL payload limit
 
@@ -71,3 +84,13 @@ _Workaround 1:_ An obvious first thing to try is to use shallow clone with `dept
 _Workaround 2:_ If fixed `--depth` won't do, you could do shallow clone with `actions/checkout`, and then unshallow partially via a direct git command like `SHALLOW_SINCE=$(date -d "1 month ago" +%Y-%m-%d); git fetch --shallow-since=$SHALLOW_SINCE origin main`. 
 
 _Workaround 3:_ Limit the amount of data transfered by `git fetch` with `--filter=tree:0`, or `--filter=blob:none` etc. (see [this blog](https://github.blog/open-source/git/get-up-to-speed-with-partial-clone-and-shallow-clone/)) or other related options.
+
+## Soft limits
+
+### ~1 MB - 2 MB: a single .ts file size
+
+This is not a set in stone limit, but often TypeScript starts struggling with inferring types in large files, especially if the whole file is just a one large data object (a "JSON" but saved as `.ts`).
+
+_Workaround_: split the large data files; give them explicit types, to avoid TS trying to infer the massive literal type.
+
+
