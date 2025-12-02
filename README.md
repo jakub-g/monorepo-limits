@@ -81,6 +81,8 @@ By default, you can't upload more than 5 GB through AWS S3 APIs. The GitLab's `a
 
 _Solution_: if you rely on AWS S3 directly, use multipart upload API which allows bigger uploads. 
 
+If you rely on GitLab: v17.4 supports multipart uploads.
+
 ### ~20 GB: GitHub Actions runner disk size
 
 If you try to write > ~20 GB on disk within GitHub Actions, the workflow will fail due to not enough space. This can happen e.g. when cloning a large repo with `actions/checkout`.
