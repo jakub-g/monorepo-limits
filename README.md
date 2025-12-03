@@ -75,13 +75,13 @@ Common scenarios when this happens:
   - The problem is that by having shallow clone with `--depth 1`, the HEAD after the clone (the shallow boundary) is not a "real" commit and when trying to push later, git can't properly figure out what it has to push through the standard remote negotiation. So it tries to push way too much data.
   - _Solution_: to [clone with `--depth 2` to avoid the issue](https://news.ycombinator.com/item?id=43023283), or to unshallow/deepen your clone before pushing.
  
-### 5 GB: Amazon AWS single upload limit (inherited GitLab artifacts)
+### 5 GB: Amazon AWS single upload limit (inherited by GitLab artifacts)
 
-By default, you can't upload more than 5 GB through AWS S3 APIs. The GitLab's `artifacts` inherits this limitation as well, meaning it's not possible to use it to share >5GB of data across CI jobs out of the box.
+By default, you can't upload more than 5 GB through AWS S3 APIs. The GitLab's `artifacts` inherits this limitation as well (until v17.x), meaning it's not possible to use it to share >5GB of data across CI jobs out of the box.
 
 _Solution_: if you rely on AWS S3 directly, use multipart upload API which allows bigger uploads. 
 
-If you rely on GitLab: v17.4 supports multipart uploads.
+If you rely on GitLab: v17.4+ supports multipart uploads.
 
 ### ~20 GB: GitHub Actions runner disk size
 
