@@ -4,7 +4,7 @@ This is just a collection of **hard limits** of various technologies, directly e
 
 The limits here are not in any way specific to a monorepo; it's just that having a large repo with tens of thousands of files is likely to, at some point, uncover those limits.
 
-_Technologies mentioned: git, Node.js, TypeScript, Amazon AWS S3, GitHub.com, GitLab self-hosted_
+_Technologies mentioned: git, Node.js, TypeScript, Amazon AWS S3 & CloudFront, GitHub.com, GitLab self-hosted_
 
 Note: having large files (> several MBs) stored in a git repo is **hugely not recommended**, especially if those files change more often than a few times per year.
 
