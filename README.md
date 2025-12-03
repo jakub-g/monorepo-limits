@@ -8,7 +8,7 @@ The limits here are not in any way specific to a monorepo; it's just that having
 
 Note: having large files (> several MBs) stored in a git repo is **hugely not recommended**, especially if those files change more often than a few times per year.
 
-## Hard limits
+## Hard size limits
 
 ### 10 MB: The limit for AWS CloudFront and Google GCP Cloud CDN for on-the-fly asset compression to work
 
@@ -93,7 +93,7 @@ _Workaround 2:_ If fixed `--depth` won't do, you could do shallow clone with `ac
 
 _Workaround 3:_ Limit the amount of data transfered by `git fetch` with `--filter=tree:0`, or `--filter=blob:none` etc. (see [this blog](https://github.blog/open-source/git/get-up-to-speed-with-partial-clone-and-shallow-clone/)) or other related options.
 
-## Soft limits
+## Soft size limits
 
 ### ~1 MB - 2 MB: a single .ts file size
 
@@ -101,4 +101,14 @@ This is not a set in stone limit, but often TypeScript starts struggling with in
 
 _Workaround_: split the large data files; give them explicit types, to avoid TS trying to infer the massive literal type.
 
+## Other limits
 
+### 1: number of case-insensitive branch name "duplicates" that doesn't pose problems
+
+`git` stores branch names as files on disk. This pose various problems on some filesystems, e.g. macOS by default. For example, a git repo may have branches `foo` and `FOO`. Cloning this repo on macOS will fail. While `git` tries to prevent this from happening, it's easy to end up with this situation nonetheless.
+
+Another similar problems are branch names that contain special characters like `'`.
+
+_Workaround_: delete/rename the "duplicated" branches.
+
+_Good news_: git 3.0 will change the default implementation of git branches to [reftable](https://about.gitlab.com/blog/a-beginners-guide-to-the-git-reftable-format/) which will solve those issues.
