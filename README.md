@@ -113,4 +113,4 @@ In a repo with 100s of users and 1000s of branches, it's nearly guaranteed to en
 
 _Workaround_: delete/rename the "duplicated" branches or branches with special characters. Set up monitoring on new branches being created and check if new branch names are problematic.
 
-_Good news_: git 3.0 will change the default implementation of git branches to [reftable](https://about.gitlab.com/blog/a-beginners-guide-to-the-git-reftable-format/) which will solve those issues.
+_Good news_: [git 3.0 will change the default implementation](https://git-scm.com/docs/BreakingChanges#_git_3_0) of git branches to [reftable](https://about.gitlab.com/blog/a-beginners-guide-to-the-git-reftable-format/) which will solve those issues.
