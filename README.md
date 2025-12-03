@@ -12,13 +12,13 @@ Note: having large files (> several MBs) stored in a git repo is **hugely not re
 
 ### 10 MB: The limit for AWS CloudFront and Google GCP Cloud CDN for on-the-fly asset compression to work
 
-AWS CloudFront [can on-the-fly gzip the files up to 10MB](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/ServingCompressedFiles.html) - which will typically shrink their size to around ~2MB after gzip. Once you exceed 10MB, assets gets sent to customers as-is uncompressed. Which likely means a massive loading time regression.
+AWS CloudFront [can on-the-fly gzip the files up to 10MB](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/ServingCompressedFiles.html) - which will typically shrink their size to around ~2MB after gzip. Once you exceed 10MB, assets get sent to customers as-is uncompressed. Which likely means a massive loading time regression.
 
 _No easy workaround:_ just don't allow your assets to exceed 10 MB. 
 
 You can possibly do the compression at build time if you can't make your files smaller, but if done incorrectly, it can backfire.
 
-In case of JS app, you want to split your code to lazy-loadable components dynamically `import()`-ed, and hope your bundle to do the magic.
+In case of JS app, you want to split your code to lazy-loadable components dynamically `import()`-ed, and hope your bundler to do the magic of splitting the bundles.
 
 However, it's extremely easy to make a mistake in your JS code which explodes you bundle size via an innocuous static `import` which brings much more than it looks like.
 
