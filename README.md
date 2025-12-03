@@ -109,6 +109,8 @@ _Workaround_: split the large data files; give them explicit types, to avoid TS 
 
 Another similar problem: branch names that contain "special" characters like `'`, `&`, ' ', which can mess up with some shell operations, including built-in git operations.
 
-_Workaround_: delete/rename the "duplicated" branches or branches with special characters.
+In a repo with 1000s of branches, it's nearly guaranteed to end up with such branches from time to time. Unfortunately, GitHub doesn't offer any server-side "hooks" to prevent such branches from being created.
+
+_Workaround_: delete/rename the "duplicated" branches or branches with special characters. Set up monitoring on new branches being created and check if new branch names are problematic.
 
 _Good news_: git 3.0 will change the default implementation of git branches to [reftable](https://about.gitlab.com/blog/a-beginners-guide-to-the-git-reftable-format/) which will solve those issues.
