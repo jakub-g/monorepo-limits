@@ -37,6 +37,16 @@ _Workaround_: In `tsconfig.json`, set `compilerOptions.disableSizeLimit: true`.
 
 _Solution_: Migrate your JS/JSON files to TS.
 
+### 25 MB: GitHub webhook payload limit
+
+GitHub webhooks' "(...) payloads are capped at 25 MB. If an event generates a larger payload, [GitHub will not deliver a payload for that webhook event](https://docs.github.com/en/webhooks/webhook-events-and-payloads#payload-cap)."
+
+This can bite you when your CI depends on push webhooks to trigger.
+
+When someone updates their behind-by-1000+-commits pull request by merging `main`, this will generate an event with up to 1000 commits metadata inside. If the `diff --stat` (the names of files modified) of those commits is huge, it may exceed 25 MB. This can easily happen in a large monorepo with tens of thousands of file, where people tend to update their branches by clicking `Update with merge` from GitHub UI. Those "merge main into some-pr-branch" commits can have huge diffs. If enough of such commits are within the last 1000 commits range (e.g. someone updated their PR multiple times by merging main), the 25 MB threshold is very likely to be exceeded.
+
+_Workaround:_ An alternative is updating PRs with rebase instead of merging. Note though, this must be done locally if you enforce code signing in main branch -- GitHub can make signed merges, but not signed rebases.
+
 ### 33.8 MB / 45 MB: Github GraphQL payload limit
 
 When making a commit to update some file(s) with GitHub GraphQL API, the limit for payload is 45 MB. However, as the data is transferred base64-encoded, effectively this makes it ~33.8 MB (base64 inflates data size by ~33%).
