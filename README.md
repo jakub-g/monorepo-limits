@@ -105,10 +105,10 @@ _Workaround_: split the large data files; give them explicit types, to avoid TS 
 
 ### 1: number of case-insensitive branch name "duplicates" that doesn't pose problems
 
-`git` stores branch names as files on disk. This pose various problems on some filesystems, e.g. macOS by default. For example, a git repo may have branches `foo` and `FOO`. Cloning this repo on macOS will fail. While `git` tries to prevent this from happening, it's easy to end up with this situation nonetheless.
+`git` stores branch names as files on disk. This may pose diffent problems, depending on filesystem. For example, a git repo may have branches `foo` and `FOO`. Cloning this repo on macOS will fail. While `git` tries to prevent creating such "duplicated" branches locally, it's easy to end up with this situation nonetheless, e.g. when one of the branches is created on remote through API call.
 
-Another similar problems are branch names that contain special characters like `'`.
+Another similar problem: branch names that contain "special" characters like `'`, `&`, ' ', which can mess up with some shell operations, including built-in git operations.
 
-_Workaround_: delete/rename the "duplicated" branches.
+_Workaround_: delete/rename the "duplicated" branches or branches with special characters.
 
 _Good news_: git 3.0 will change the default implementation of git branches to [reftable](https://about.gitlab.com/blog/a-beginners-guide-to-the-git-reftable-format/) which will solve those issues.
