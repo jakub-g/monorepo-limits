@@ -103,7 +103,7 @@ _Workaround_: split the large data files; give them explicit types, to avoid TS 
 
 ## Other limits
 
-### 1: number of case-insensitive branch name "duplicates" that doesn't pose problems
+### 0: number of case-insensitive branch name "duplicates" and branches with "special" characters that doesn't pose problems
 
 `git` stores branch names as files on disk. This may pose different problems, depending on filesystem. For example, a git repo may have branches `foo` and `FOO`. Cloning this repo on macOS _will fail_. While `git` tries to prevent creating such "duplicated" branches locally, it's easy to end up with this situation nonetheless, e.g. when each of the branches is created in a separate clone, or via API call on the remote server.
 
