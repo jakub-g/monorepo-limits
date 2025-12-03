@@ -105,11 +105,11 @@ _Workaround_: split the large data files; give them explicit types, to avoid TS 
 
 ### 1: number of case-insensitive branch name "duplicates" that doesn't pose problems
 
-`git` stores branch names as files on disk. This may pose diffent problems, depending on filesystem. For example, a git repo may have branches `foo` and `FOO`. Cloning this repo on macOS will fail. While `git` tries to prevent creating such "duplicated" branches locally, it's easy to end up with this situation nonetheless, e.g. when one of the branches is created on remote through API call.
+`git` stores branch names as files on disk. This may pose different problems, depending on filesystem. For example, a git repo may have branches `foo` and `FOO`. Cloning this repo on macOS _will fail_. While `git` tries to prevent creating such "duplicated" branches locally, it's easy to end up with this situation nonetheless, e.g. when each of the branches is created in a separate clone, or via API call on the remote server.
 
-Another similar problem: branch names that contain "special" characters like `'`, `&`, ' ', which can mess up with some shell operations, including built-in git operations.
+Another similar problem: branch names that contain "special" characters like `'`, `&`, ` `, which can mess up with some shell operations, including built-in git operations.
 
-In a repo with 1000s of branches, it's nearly guaranteed to end up with such branches from time to time. Unfortunately, GitHub doesn't offer any server-side "hooks" to prevent such branches from being created.
+In a repo with 100s of users and 1000s of branches, it's nearly guaranteed to end up with such branches from time to time. Unfortunately, GitHub doesn't offer any server-side "hooks" to prevent such branches from being created.
 
 _Workaround_: delete/rename the "duplicated" branches or branches with special characters. Set up monitoring on new branches being created and check if new branch names are problematic.
 
