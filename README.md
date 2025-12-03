@@ -43,7 +43,7 @@ GitHub webhooks' "(...) payloads are capped at 25 MB. If an event generates a la
 
 This can bite you when your CI depends on push webhooks to trigger.
 
-When someone updates their behind-by-1000+-commits pull request by merging `main`, this will generate an event with up to 1000 commits metadata inside. If the `diff --stat` (the names of files modified) of those commits is huge, it may exceed 25 MB. This can easily happen in a large monorepo with tens of thousands of file, where people tend to update their branches by clicking `Update with merge` from GitHub UI. Those "merge main into some-pr-branch" commits can have huge diffs. If enough of such commits are within the last 1000 commits range (e.g. someone updated their PR multiple times by merging main), the 25 MB threshold is very likely to be exceeded.
+When someone updates their behind-by-1000+-commits pull request by merging `main`, this will generate an event with up to 1000 commits metadata inside. If the `diff --stat` (the names of files modified) of those commits is huge, it may exceed 25 MB. This can easily happen in a large monorepo with tens of thousands of files, where developer tend to update their stale branches by clicking `Update with merge commit` from GitHub UI. Those "merge main into some-pr-branch" commits can have huge diffs. If enough of such commits are within the last 1000 commits range (e.g. someone updated their PR multiple times by merging main), the 25 MB threshold is very likely to be exceeded.
 
 _Workaround:_ An alternative is updating PRs with rebase instead of merging. Note though, this must be done locally if you enforce code signing in main branch -- GitHub can make signed merges, but not signed rebases.
 
