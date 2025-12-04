@@ -124,3 +124,16 @@ In a repo with 100s of users and 1000s of branches, it's nearly guaranteed to en
 _Workaround_: delete/rename the "duplicated" branches or branches with special characters. Set up monitoring on new branches being created and check if new branch names are problematic.
 
 _Good news_: [git 3.0 will change the default implementation](https://git-scm.com/docs/BreakingChanges#_git_3_0) of git branches to [reftable](https://about.gitlab.com/blog/a-beginners-guide-to-the-git-reftable-format/) which will solve those issues.
+
+### 1000: number of files GitLab diff API can tell about
+
+If the diff is bigger than 1000 files, it [gets truncated to 1000 files](https://docs.gitlab.com/development/merge_request_concepts/diffs/), and there's no way to know that it happened.
+
+> No more files are rendered at all if 1000 files have already been rendered.
+
+_Workaround_: If the diff is exactly 1000 files, assume it's probably more.
+
+
+## Recommended reading
+
+- [GitHub: Repository limits](https://docs.github.com/en/repositories/creating-and-managing-repositories/repository-limits) recommendations
