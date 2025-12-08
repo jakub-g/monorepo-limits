@@ -93,15 +93,17 @@ _Solution_: if you rely on AWS S3 directly, use multipart upload API which allow
 
 If you rely on GitLab: v17.4+ supports multipart uploads.
 
-### ~20 GB: GitHub Actions runner disk size
+### ~15 GB: GitHub Actions runner available disk size
 
-If you try to write > ~20 GB on disk within GitHub Actions, the workflow will fail due to not enough space. This can happen e.g. when cloning a large repo with `actions/checkout`.
+If you try to write > ~15 GB on disk within GitHub Actions, the workflow will fail due to not enough space. This can happen e.g. when cloning a large repo with `actions/checkout`. (Note: you need to account both the size of the cloned `.git` folder, and the actual checkout of HEAD).
 
 _Workaround 1:_ An obvious first thing to try is to use shallow clone with `depth: 1` or so. But sometimes it's not possible, because you need _some_ recent history in the workflow. But you may not know how many commits exactly you need.
 
 _Workaround 2:_ If fixed `--depth` won't do, you could do shallow clone with `actions/checkout`, and then unshallow partially via a direct git command like `SHALLOW_SINCE=$(date -d "1 month ago" +%Y-%m-%d); git fetch --shallow-since=$SHALLOW_SINCE origin main`. 
 
 _Workaround 3:_ Limit the amount of data transfered by `git fetch` with `--filter=tree:0`, or `--filter=blob:none` etc. (see [this blog](https://github.blog/open-source/git/get-up-to-speed-with-partial-clone-and-shallow-clone/)) or other related options.
+
+_Workaround 4:_ Use [this GitHub workflow](https://github.com/jlumbroso/free-disk-space) to delete some built-in packages from the GitHub runner image.
 
 ## Soft size limits
 
